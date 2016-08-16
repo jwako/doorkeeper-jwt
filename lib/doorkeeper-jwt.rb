@@ -9,7 +9,8 @@ module Doorkeeper
         ::JWT.encode(
           token_payload(opts),
           secret_key(opts),
-          encryption_method
+          encryption_method,
+          jwk_kid
         )
       end
 
@@ -76,6 +77,11 @@ module Doorkeeper
 
       def secret_key_file_open
         File.open(Doorkeeper::JWT.configuration.secret_key_path)
+      end
+      
+      def jwk_kid
+        return nil unless Doorkeeper::JWT.configuration.jwk_kid
+        {kid: Doorkeeper::JWT.configuration.jwk_kid}
       end
     end
   end

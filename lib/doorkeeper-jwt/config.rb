@@ -44,6 +44,10 @@ module Doorkeeper
           @config.instance_variable_set(
             '@encryption_method', encryption_method)
         end
+        
+        def jwk_kid(kid)
+          @config.instance_variable_set('@jwk_kid', kid)
+        end
       end
 
       module Option
@@ -115,6 +119,7 @@ module Doorkeeper
       option :secret_key, default: nil
       option :secret_key_path, default: nil
       option :encryption_method, default: nil
+      option :jwk_kid, default: nil
 
       def use_application_secret
         @use_application_secret ||= false
@@ -130,6 +135,10 @@ module Doorkeeper
 
       def encryption_method
         @encryption_method ||= nil
+      end
+      
+      def jwk_kid
+        @jwk_kid ||= nil
       end
     end
   end
