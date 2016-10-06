@@ -6,6 +6,7 @@ module Doorkeeper
   module JWT
     class << self
       def generate(opts = {})
+        opts.merge({current_materialized_view_id: session[:current_materialized_view_id]}) if session[:current_materialized_view_id].present?
         ::JWT.encode(
           token_payload(opts),
           secret_key(opts),
